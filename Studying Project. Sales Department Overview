@@ -1,0 +1,34 @@
+Studying Project. Sales Department Overview
+
+Resource: BigQuery open dataset
+Programming Language: SQL
+Dashboard https://lookerstudio.google.com/u/0/reporting/de11c4b6-e7b4-4059-8505-81dea42359fb/page/FwDGD/edit
+SQL Query: 
+
+WITH
+    main_table AS(
+                   SELECT 
+                       salesorderheader.SalesOrderID,OrderDate, EXTRACT(ISOYEAR FROM DATE(OrderDate)) as Year, FORMAT_DATE('%Y(%Q)', DATE(OrderDate)) as Quarter, TotalDue,
+                       CustomerType, 
+                       salesterritory.Name as Country, salesterritory.Group as Region,  
+                       salesorderdetail.ProductID, product.Name, productsubcategory.Name as ProductSubcategoryName, productcategory.Name   as ProductCategoryName, productsubcategory.ProductCategoryID as ProductCategoryID, 
+                   FROM `adwentureworks_db.salesorderheader` as salesorderheader
+                   JOIN `adwentureworks_db.salesorderdetail` as salesorderdetail
+                   ON salesorderheader.SalesOrderID = salesorderdetail.SalesOrderDetailID
+                   JOIN `adwentureworks_db.specialofferproduct` as specialofferproduct
+                   ON salesorderdetail.ProductID = specialofferproduct.ProductID
+                   JOIN `adwentureworks_db.product` as product 
+                   ON specialofferproduct.ProductID = product.ProductID
+                   JOIN `adwentureworks_db.productsubcategory` as productsubcategory
+                   ON product.ProductSubcategoryID = productsubcategory.ProductSubcategoryID
+                   JOIN `adwentureworks_db.productcategory` as productcategory
+                   ON productsubcategory.ProductCategoryID = productcategory.ProductCategoryID
+                   JOIN `adwentureworks_db.customer` as customer
+                   ON salesorderheader.CustomerID = customer.CustomerID
+                   JOIN `adwentureworks_db.salesterritory` as salesterritory 
+                   ON salesorderheader.TerritoryID = salesterritory.TerritoryID 
+                   )
+--remove_duplicates 
+SELECT DISTINCT*
+FROM main_table
+ORDER BY 2
