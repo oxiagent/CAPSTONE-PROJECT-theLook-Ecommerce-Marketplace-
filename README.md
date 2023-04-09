@@ -1,5 +1,5 @@
-# Data-Analyst_Portfolio
-### CAPSTONE PROJECT 'theLook Ecommerce Marketplace'
+# CAPSTONE PROJECT 'theLook Ecommerce Marketplace'
+
 
 Dataset: [theLook Ecommerce Marketplace](https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=thelook_ecommerce&page=dataset&project=wide-maxim-339515&ws=!1m4!1m3!3m2!1sbigquery-public-data!2sthelook_ecommerce)
 
